@@ -1,8 +1,8 @@
 // src/About.js
 import React, { useState } from "react";
 import logo from "../images/logo.png";
-import SubmissionButton from "../base-components/button";
-import InputText from "../base-components/input-text";
+import SubmissionButton from "../base-components/buttons/button";
+import InputText from "../base-components/inputs/input-text";
 
 function Login() {
   const [email, setEmail] = useState("");

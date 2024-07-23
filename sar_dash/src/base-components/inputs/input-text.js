@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-function InputText({ label, placeholder, value, setValue }) {
+function InputText({ label, placeholder, value, onChange }) {
   const handleInputChange = (event) => {
-    setValue(event.target.value);
+    onChange(event.target.value);
   };
 
   return (
