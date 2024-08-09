@@ -1,6 +1,4 @@
-// src/InputComponent.js
-import React, { useState } from "react";
-
+import React from "react";
 function PageHeader({ text }) {
   return (
     <div className="page-header">

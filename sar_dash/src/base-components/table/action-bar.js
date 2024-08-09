@@ -10,14 +10,16 @@ function ActionBar({ item, fields, setFilter, filterFields }) {
     console.log("Selected option:", selectedOption);
   };
 
+  const searchPlaceholder = `Search for ${item}s`;
+
   return (
     <div className="action-bar">
       <span className="search">
-        <InputText placeholder={"search"} />
+        <InputText placeholder={searchPlaceholder} />
       </span>
 
       <span className="filters">
-        <p>Filter By:</p>
+        {/* <p>Filter By:</p> */}
         {filterFields &&
           filterFields.map((i) => (
             <Dropdown
@@ -26,12 +28,12 @@ function ActionBar({ item, fields, setFilter, filterFields }) {
               placeholder={filterFields.placeholder}
             />
           ))}
-        <Dropdown
+        {/* <Dropdown
           options={options}
           onSelect={setFilter}
           placeholder={"select a trail"}
-        />
-        <InputDateTime />
+        /> */}
+        {/* <InputDateTime /> */}
       </span>
     </div>
   );

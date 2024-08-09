@@ -1,8 +1,24 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function TableButtons({ selectedItem, setFormOpen }) {
-  const item = "Checkpoint";
+function TableButtons({ selectedItem, setFormOpen, item }) {
+  // handles button states
   const active = selectedItem ? "" : "inactive";
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/manage-checkpoints", {
+      state: { trailId: selectedItem.id, trailName: "juan" },
+    });
+  };
+
+  // different button types :3
+  const ViewCheckpointsButton = (
+    <button className={`button`} onClick={() => handleButtonClick()}>
+      View Checkpoints
+    </button>
+  );
+
   const EditButton = (
     <button
       className={`button ${active}`}
@@ -11,9 +27,7 @@ function TableButtons({ selectedItem, setFormOpen }) {
       Edit {item}
     </button>
   );
-  const DeleteButton = (
-    <button className={`button ${active}`}>Delete {item}</button>
-  );
+
   const AddButton = (
     <button
       className="button"
@@ -23,11 +37,17 @@ function TableButtons({ selectedItem, setFormOpen }) {
     </button>
   );
 
+  const DeleteButton = (
+    <button className={`button ${active}`}>Delete {item}</button>
+  );
+
   return (
     <div className="table-buttons">
       {AddButton}
       {EditButton}
       {DeleteButton}
+
+      {item === "trail" && ViewCheckpointsButton}
     </div>
   );
 }

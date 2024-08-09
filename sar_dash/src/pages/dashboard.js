@@ -6,6 +6,7 @@ import mountain from "../images/mountain.png";
 import person from "../images/person.png";
 import Table from "../base-components/table/table";
 import ActionBar from "../base-components/table/action-bar";
+import PageHeader from "../base-components/page-header";
 
 function Dashboard() {
   const item = {
@@ -36,6 +37,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
+      <PageHeader text={"Hiker Dashboard"} />
       <div className="dashboard-buttons">
         <DashboardButton
           label={"Checkpoint Alerts"}

@@ -1,27 +1,34 @@
 // src/InputComponent.js
 import React, { useState, useEffect } from "react";
 import { fetchCheckpoints, updateCheckpoint } from "../requests/api";
+import { useLocation } from "react-router-dom";
 import Table from "../base-components/table/table";
 import EditForm from "../base-components/forms/edit-form";
 import TableButtons from "../base-components/table/table-buttons";
 import AddForm from "../base-components/forms/add-form";
+import DashboardButtons from "../components/dashboard-buttons";
+import PageHeader from "../base-components/page-header";
 
-function ManageCheckpoints({ trailId }) {
+function ManageCheckpoints() {
   const [data, setData] = useState(null);
   const [formOpen, setFormOpen] = useState({ add: false, edit: false });
   const [selectedRow, setSelectedRow] = useState(null);
   const itemType = "Checkpoint";
 
-  trailId = 1;
+  const location = useLocation();
+  const { trailId, trailName } = location.state || {};
+
+  console.log(trailId);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetchCheckpoints({ trailId: 1 });
+      const result = await fetchCheckpoints({ trailId: trailId });
       setData(result);
     };
 
     fetchData();
   }, []);
 
+  // TODO : MAKE A BETTER LOADING SCREEN
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -35,26 +42,45 @@ function ManageCheckpoints({ trailId }) {
 
   return (
     <div>
-      {/* <AddForm fields={fields} itemType={itemType} /> */}
+      <PageHeader text={"Manage Checkpoints"} />
+      <DashboardButtons />
+      <div className="manage-checkpoints-trail-name">
+        <h3>{trailName} Trail</h3>
+      </div>
       {formOpen.add && (
+        <AddForm
+          fields={fields}
+          itemType={itemType}
+          itemToEdit={selectedRow}
+          setFormOpen={setFormOpen}
+        />
+      )}
+      {formOpen.edit && (
         <EditForm
           fields={fields}
           itemType={itemType}
           itemToEdit={selectedRow}
-          setForm={setSelectedRow}
+          setFormOpen={setFormOpen}
         />
       )}
       <div
         className={
-          selectedRow ? "blur manage-checkpoints" : "manage-checkpoints"
+          formOpen.add || formOpen.edit
+            ? "blur manage-checkpoints"
+            : "manage-checkpoints"
         }
       >
-        <TableButtons selectedItem={selectedRow} setFormOpen={setFormOpen} />
+        <TableButtons
+          selectedItem={selectedRow}
+          setFormOpen={setFormOpen}
+          item={"checkpoint"}
+        />
         <Table
           fields={fields}
           initItems={data.checkpoints}
           setSelectedRow={setSelectedRow}
           selectedRow={selectedRow}
+          itemType={"Checkpoint"}
         />
       </div>
     </div>

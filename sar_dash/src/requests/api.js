@@ -24,6 +24,55 @@ export const fetchTrails = async () => {
   }
 };
 
+export const addTrail = async ({ trail }) => {
+  const apiEndpoint = `${api}/trail`;
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: trail.name,
+        address: trail.address,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Successfully added trail", data);
+      return data;
+    }
+  } catch (error) {
+    console.error("Error during trail post:", error);
+  }
+};
+
+export const updateTrail = async ({ trailId, trail }) => {
+  const apiEndpoint = `${api}/trails/${trailId}`;
+
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: trail.name,
+        address: trail.address,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Successfully updated checkpoint", data);
+      return data;
+    }
+  } catch (error) {
+    console.error("Error during checkpoints fetch:", error);
+  }
+};
+
 export const fetchCheckpoints = async ({ trailId }) => {
   // Replace with your API endpoint
   const apiEndpoint = `${api}/checkpoints?trail_id=${trailId}`;
@@ -39,9 +88,6 @@ export const fetchCheckpoints = async ({ trailId }) => {
       const data = await response.json();
       console.log("Successfully retrieved checkpoints", data);
       return data;
-    } else {
-      // Handle errors
-      console.log("Retrieving checkpoints failed", response.statusText);
     }
   } catch (error) {
     console.error("Error during checkpoints fetch:", error);
@@ -70,8 +116,6 @@ export const updateCheckpoint = async ({ checkpointId, checkpoint }) => {
       const data = await response.json();
       console.log("Successfully updated checkpoint", data);
       return data;
-    } else {
-      console.log("Retrieving checkpoints failed", response.statusText);
     }
   } catch (error) {
     console.error("Error during checkpoints fetch:", error);
@@ -99,10 +143,29 @@ export const addCheckpoints = async ({ checkpoint }) => {
       const data = await response.json();
       console.log("Successfully added checkpoint", data);
       return data;
-    } else {
-      console.log("Posting checkpoint failed", response.statusText);
     }
   } catch (error) {
     console.error("Error during checkpoints post:", error);
+  }
+};
+
+export const fetchUsers = async () => {
+  // Replace with your API endpoint
+  const apiEndpoint = `${api}/users`;
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Successfully retrieved users", data);
+      return data;
+    }
+  } catch (error) {
+    console.error("Error during users fetch:", error);
   }
 };

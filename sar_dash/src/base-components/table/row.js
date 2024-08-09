@@ -10,17 +10,22 @@ function Row({ item, fields, setSelectedRow, selectedRow }) {
   }, [selectedRow, item]);
 
   const handleClick = () => {
-    if (highlighted) {
-      setHighlighted(false);
-      setSelectedRow(null);
-    } else {
+    if (!highlighted) {
+      setSelectedRow(item);
       setHighlighted(true);
-      setHighlighted(item);
+    } else {
+      setSelectedRow(null);
+      setHighlighted(false);
     }
   };
 
   return (
-    <tr style={{ backgroundColor: highlighted ? "blue" : "" }}>
+    <tr
+      style={{
+        backgroundColor: highlighted ? "#7ADC99" : "",
+        opacity: highlighted ? 0.5 : 1,
+      }}
+    >
       {fields.map((field, index) => (
         <td onClick={handleClick} key={index}>
           {item[field]}

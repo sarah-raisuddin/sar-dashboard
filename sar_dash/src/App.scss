@@ -4,10 +4,12 @@ $body-text: #1e1e1e;
 $label-text: #d9d9d9;
 $label-font-size: 25px;
 $primary-color: #304529;
+$secondary-color: #304529;
 $button-color: #304529;
 $header-background: #d9d9d9;
 $header-font-size: 60px;
 $dashboard-button-color: #304529;
+$standard-roundness: 8px;
 
 body {
   margin: 0;
@@ -79,7 +81,8 @@ select {
 }
 
 .table-buttons {
-  padding: 10px 20px;
+  // padding: 10px 20px;
+  margin: 10px 39px;
   .button {
     margin-right: 10px;
   }
@@ -99,6 +102,7 @@ select {
   justify-content: space-between;
   display: flex;
   max-width: 1346px;
+  width: 96%;
   margin: 30px auto;
 }
 
@@ -149,13 +153,69 @@ select {
 }
 
 .page-header {
-  background-color: $header-background;
+  background-color: white;
   h1 {
     font-size: $header-font-size;
     color: $header-text;
-    padding: 26px 39px 52px;
+    margin: 26px 39px 0px;
     font-style: italic;
-    margin: 0;
+    // margin: 0;
+  }
+}
+
+.header-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $header-background;
+
+  .header-menu-left {
+    .menu-logo {
+      height: 40px;
+      width: auto;
+    }
+  }
+
+  .header-menu-right {
+    .menu-links {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      li {
+        margin-right: 1rem;
+      }
+
+      a {
+        color: $secondary-color;
+        text-decoration: underline;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .account-control-link {
+        background-color: #4a6741;
+        border-radius: $standard-roundness;
+        padding: 5px 5px;
+        margin-right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 30px;
+
+        // center the link in the box
+        li {
+          margin-right: 0;
+        }
+
+        a {
+          color: white;
+          text-decoration: underline;
+          cursor: pointer;
+          font-weight: bold;
+        }
+      }
+    }
   }
 }
 
@@ -276,9 +336,24 @@ select {
     border-radius: 20px;
     background-color: #4a6741;
     padding: 25px 37px;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
 
 .manage-checkpoints {
   transition: 0.1s;
+  &-trail-name {
+    font-size: 48px;
+    font-style: italic;
+    border-top: 1px solid;
+    margin: 0 39px;
+    padding: 26px 0px;
+    h3 {
+      margin: 0;
+    }
+  }
 }

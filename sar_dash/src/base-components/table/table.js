@@ -9,6 +9,7 @@ function Table({
   filterFields,
   setSelectedRow,
   selectedRow,
+  itemType,
 }) {
   const [items, setItems] = useState(initItems);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -36,7 +37,11 @@ function Table({
 
   return (
     <div>
-      <ActionBar setFilter={setFilter} />
+      <ActionBar
+        item={itemType}
+        setFilter={setFilter}
+        filterFields={filterFields}
+      />
       <table className="data-table">
         <HeaderRow fields={fields} onSort={onSort} sortConfig={sortConfig} />
         <tbody>

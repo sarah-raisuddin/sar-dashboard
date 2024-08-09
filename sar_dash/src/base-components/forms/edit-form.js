@@ -1,16 +1,24 @@
 import React from "react";
 import InputText from "../inputs/input-text";
 import SubmissionButton from "../buttons/button";
-import { updateCheckpoint } from "../../requests/api";
+import { updateCheckpoint, updateTrail } from "../../requests/api";
 import { useState, useEffect } from "react";
 import CloseFormButton from "../buttons/close-form-button";
 
-const EditForm = ({ fields, itemToEdit, itemType, setForm }) => {
+const EditForm = ({ fields, itemToEdit, itemType, setFormOpen }) => {
   const [updatedItem, setUpdatedItem] = useState(itemToEdit);
   const onSubmit = () => {
-    console.log("clicked");
-    console.log(itemToEdit.id);
-    updateCheckpoint({ checkpointId: itemToEdit.id, checkpoint: updatedItem });
+    if (itemType === "Checkpoint") {
+      updateCheckpoint({
+        checkpointId: itemToEdit.id,
+        checkpoint: updatedItem,
+      });
+    } else {
+      updateTrail({
+        trailId: itemToEdit.id,
+        trail: updatedItem,
+      });
+    }
   };
 
   // Handler to update a specific field
@@ -25,8 +33,13 @@ const EditForm = ({ fields, itemToEdit, itemType, setForm }) => {
   return (
     <div className="form-underlay">
       <div className="edit-form-container">
-        <CloseFormButton handleSubmit={() => setForm(null)} />
-        <h1>{formTitle}</h1>
+        <div className="edit-form-header">
+          <h1>{formTitle}</h1>
+          <CloseFormButton
+            handleSubmit={() => setFormOpen({ add: false, edit: false })}
+          />
+        </div>
+
         <div className="edit-form">
           {fields.map((i) => (
             <InputText
