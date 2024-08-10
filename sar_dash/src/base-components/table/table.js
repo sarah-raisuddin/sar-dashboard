@@ -14,6 +14,8 @@ function Table({
   const [items, setItems] = useState(initItems);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [filter, setFilter] = useState("");
+  console.log(initItems);
+  console.log(fields);
 
   const onSort = (field) => {
     let direction = "asc";
@@ -30,10 +32,7 @@ function Table({
     setItems(sortedItems);
   };
 
-  const filteredItems = items.filter(
-    (item) => item
-    // item.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredItems = items;
 
   return (
     <div>
@@ -45,9 +44,9 @@ function Table({
       <table className="data-table">
         <HeaderRow fields={fields} onSort={onSort} sortConfig={sortConfig} />
         <tbody>
-          {filteredItems.map((i) => (
+          {initItems.map((i) => (
             <Row
-              key={i["tag-identifier"]}
+              key={i}
               item={i}
               fields={fields}
               setSelectedRow={setSelectedRow}

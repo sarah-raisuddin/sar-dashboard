@@ -9,20 +9,21 @@ import DashboardButtons from "../components/dashboard-buttons";
 import { fetchTrails } from "../requests/api";
 
 import PageHeader from "../base-components/page-header";
-function ManageTrails({ trailId, trailName }) {
+function ManageTrails({}) {
   const [data, setData] = useState(null);
   const [formOpen, setFormOpen] = useState({ add: false, edit: false });
   const [selectedRow, setSelectedRow] = useState(null);
   const itemType = "Trail";
+  const [refresh, setRefresh] = useState(false);
 
-  // const trailId = 1;
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetchTrails();
       setData(result);
     };
     fetchData();
-  }, []);
+    setRefresh(false);
+  }, [refresh]);
 
   // TODO : MAKE A BETTER LOADING SCREEN
   if (!data) {
@@ -41,6 +42,7 @@ function ManageTrails({ trailId, trailName }) {
           itemType={itemType}
           itemToEdit={selectedRow}
           setFormOpen={setFormOpen}
+          setRefresh={setRefresh}
         />
       )}
       {formOpen.edit && (
@@ -49,6 +51,7 @@ function ManageTrails({ trailId, trailName }) {
           itemType={itemType}
           itemToEdit={selectedRow}
           setFormOpen={setFormOpen}
+          setRefresh={setRefresh}
         />
       )}
       <div

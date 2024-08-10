@@ -5,10 +5,17 @@ import { updateCheckpoint, updateTrail } from "../../requests/api";
 import { useState, useEffect } from "react";
 import CloseFormButton from "../buttons/close-form-button";
 
-const EditForm = ({ fields, itemToEdit, itemType, setFormOpen }) => {
+const EditForm = ({
+  fields,
+  itemToEdit,
+  itemType,
+  setFormOpen,
+  setRefresh,
+}) => {
   const [updatedItem, setUpdatedItem] = useState(itemToEdit);
   const onSubmit = () => {
     if (itemType === "Checkpoint") {
+      console.log("yuh");
       updateCheckpoint({
         checkpointId: itemToEdit.id,
         checkpoint: updatedItem,
@@ -19,6 +26,8 @@ const EditForm = ({ fields, itemToEdit, itemType, setFormOpen }) => {
         trail: updatedItem,
       });
     }
+    setFormOpen({ add: false, edit: false });
+    setRefresh(true);
   };
 
   // Handler to update a specific field

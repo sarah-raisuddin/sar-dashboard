@@ -24,6 +24,30 @@ export const fetchTrails = async () => {
   }
 };
 
+export const fetchCheckpointEntries = async () => {
+  // Replace with your API endpoint
+  const apiEndpoint = api + "/checkpointEntries";
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Login successful", data);
+      return data.checkpointsEntries;
+    } else {
+      // Handle errors
+      console.log("Login failed", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+  }
+};
+
 export const addTrail = async ({ trail }) => {
   const apiEndpoint = `${api}/trail`;
   try {
@@ -108,7 +132,7 @@ export const updateCheckpoint = async ({ checkpointId, checkpoint }) => {
         longitude: checkpoint.longitude,
         checkpoint_order: checkpoint.checkpoint_order,
         trail_id: checkpoint.trail_id,
-        checkpoint_name: checkpoint.checkpoint_name,
+        name: checkpoint.name,
       }),
     });
 
@@ -122,7 +146,7 @@ export const updateCheckpoint = async ({ checkpointId, checkpoint }) => {
   }
 };
 
-export const addCheckpoints = async ({ checkpoint }) => {
+export const addCheckpoints = async ({ checkpoint, trailId }) => {
   const apiEndpoint = `${api}/checkpoints`;
   try {
     const response = await fetch(apiEndpoint, {
@@ -131,11 +155,11 @@ export const addCheckpoints = async ({ checkpoint }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        trail_id: checkpoint.trail_id,
+        trail_id: trailId,
         latitude: checkpoint.latitude,
         longitude: checkpoint.longitude,
         checkpoint_order: checkpoint.checkpoint_order,
-        checkpoint_name: checkpoint.checkpoint_name,
+        name: checkpoint.name,
       }),
     });
 

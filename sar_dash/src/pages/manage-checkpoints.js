@@ -13,32 +13,32 @@ function ManageCheckpoints() {
   const [data, setData] = useState(null);
   const [formOpen, setFormOpen] = useState({ add: false, edit: false });
   const [selectedRow, setSelectedRow] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const itemType = "Checkpoint";
 
   const location = useLocation();
   const { trailId, trailName } = location.state || {};
 
-  console.log(trailId);
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetchCheckpoints({ trailId: trailId });
-      setData(result);
-    };
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        const result = await fetchCheckpoints({ trailId: trailId });
+        setData(result);
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+      setRefresh(false);
+    },
+    data,
+    refresh
+  );
 
   // TODO : MAKE A BETTER LOADING SCREEN
   if (!data) {
     return <div>Loading...</div>;
   }
 
-  const fields = [
-    "checkpoint_order",
-    "checkpoint_name",
-    "latitude",
-    "longitude",
-  ];
+  const fields = ["checkpoint_order", "name", "latitude", "longitude"];
 
   return (
     <div>
@@ -53,6 +53,8 @@ function ManageCheckpoints() {
           itemType={itemType}
           itemToEdit={selectedRow}
           setFormOpen={setFormOpen}
+          trailId={trailId}
+          setRefresh={setRefresh}
         />
       )}
       {formOpen.edit && (
@@ -61,6 +63,7 @@ function ManageCheckpoints() {
           itemType={itemType}
           itemToEdit={selectedRow}
           setFormOpen={setFormOpen}
+          setRefresh={setRefresh}
         />
       )}
       <div

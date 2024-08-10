@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 function Row({ item, fields, setSelectedRow, selectedRow }) {
   const [highlighted, setHighlighted] = useState(false);
 
+  console.log(item);
+  console.log(fields);
+
   useEffect(() => {
     if (JSON.stringify(item) !== JSON.stringify(selectedRow)) {
       setHighlighted(false);
