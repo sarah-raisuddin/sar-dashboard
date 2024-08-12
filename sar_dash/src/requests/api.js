@@ -1,7 +1,7 @@
-const api = "http://localhost:3000/sar_dashboard";
+const api = `https://local-test-deployment-capstone-2024.azurewebsites.net/sar_dashboard`;
+// const api = "http://localhost:3000/sar_dashboard";
 
 export const fetchTrails = async () => {
-  // Replace with your API endpoint
   const apiEndpoint = api + "/trails";
   try {
     const response = await fetch(apiEndpoint, {
@@ -25,7 +25,6 @@ export const fetchTrails = async () => {
 };
 
 export const fetchCheckpointEntries = async () => {
-  // Replace with your API endpoint
   const apiEndpoint = api + "/checkpointEntries";
   try {
     const response = await fetch(apiEndpoint, {
@@ -98,7 +97,6 @@ export const updateTrail = async ({ trailId, trail }) => {
 };
 
 export const fetchCheckpoints = async ({ trailId }) => {
-  // Replace with your API endpoint
   const apiEndpoint = `${api}/checkpoints?trail_id=${trailId}`;
   try {
     const response = await fetch(apiEndpoint, {
@@ -122,6 +120,11 @@ export const updateCheckpoint = async ({ checkpointId, checkpoint }) => {
   const apiEndpoint = `${api}/checkpoints/${checkpointId}`;
 
   try {
+    // Convert pole_id to number if it's not already a number
+    const poleId = isNaN(checkpoint.pole_id)
+      ? parseInt(checkpoint.pole_id, 10)
+      : checkpoint.pole_id;
+
     const response = await fetch(apiEndpoint, {
       method: "PUT",
       headers: {
@@ -133,8 +136,11 @@ export const updateCheckpoint = async ({ checkpointId, checkpoint }) => {
         checkpoint_order: checkpoint.checkpoint_order,
         trail_id: checkpoint.trail_id,
         name: checkpoint.name,
+        pole_id: poleId,
       }),
     });
+
+    // Handle response as needed
 
     if (response.ok) {
       const data = await response.json();
@@ -160,6 +166,7 @@ export const addCheckpoints = async ({ checkpoint, trailId }) => {
         longitude: checkpoint.longitude,
         checkpoint_order: checkpoint.checkpoint_order,
         name: checkpoint.name,
+        pole_id: parseInt(checkpoint.pole_id, 10),
       }),
     });
 
@@ -174,7 +181,6 @@ export const addCheckpoints = async ({ checkpoint, trailId }) => {
 };
 
 export const fetchUsers = async () => {
-  // Replace with your API endpoint
   const apiEndpoint = `${api}/users`;
   try {
     const response = await fetch(apiEndpoint, {

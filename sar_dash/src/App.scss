@@ -78,10 +78,22 @@ select {
   @include button-styles();
   @include label-styles();
   padding: 13px 20px;
+  display: flex;
+  justify-content: space-between;
+  img {
+    margin-right: 15px;
+  }
+}
+
+.submission {
+  .button {
+    background-color: #4a6741;
+  }
 }
 
 .table-buttons {
   // padding: 10px 20px;
+  display: flex;
   margin: 10px 39px;
   .button {
     margin-right: 10px;
@@ -357,4 +369,29 @@ select {
       margin: 0;
     }
   }
+}
+
+.input-error-message {
+  background-color: #d97228;
+  border-radius: $standard-roundness;
+  max-height: 80;
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+
+  p {
+    color: white;
+    font-weight: bold;
+  }
+
+  img {
+    max-width: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+
+.time-range-filter {
+  display: flex !important;
+  flex-direction: row;
 }

@@ -4,16 +4,19 @@ import logo from "../images/logo.png";
 import SubmissionButton from "../base-components/buttons/button";
 import InputText from "../base-components/inputs/input-text";
 import { Link, useNavigate } from "react-router-dom";
+import apiEndpoint from "../requests/base";
+import InputErrorMessage from "../base-components/input-error-message";
 
-function Login() {
+function Login({ handleUserLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
-    const apiEndpoint = "http://localhost:3000/sar_dashboard/login";
+    const endpoint = `${apiEndpoint}sar_dashboard/login`;
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,9 +27,15 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful", data);
+        localStorage.setItem("isUserLoggedIn", "true");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("firstName", data.firstName);
         navigateTo("/dashboard");
+        handleUserLogin();
       } else {
         // Handle errors
+        setError(true);
         console.log("Login failed", response.statusText);
       }
     } catch (error) {
@@ -54,16 +63,13 @@ function Login() {
         />
         <InputText
           label="Password"
+          password={true}
           placeholder="type your password"
           value={password}
           onChange={setPassword}
         />
-        <div className="forgot-password-link">
-          <p>
-            Forgot password? <a>Click here for account recovery</a>
-          </p>
-        </div>
-        <SubmissionButton handleSubmit={handleSubmit} />
+        {error && <InputErrorMessage message={"Invaild login"} />}
+        <SubmissionButton text={"login"} handleSubmit={handleSubmit} />
       </div>
     </div>
   );

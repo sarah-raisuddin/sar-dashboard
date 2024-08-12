@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import logo from "../images/wanderSafe-logo-grey.png";
 
 function HeaderMenu({ isUserLoggedIn, handleUserLogOut }) {
+  const loginState = localStorage.getItem("isUserLoggedIn");
+
   return (
     <nav className="header-menu">
       <div className="header-menu-left">
@@ -12,11 +14,6 @@ function HeaderMenu({ isUserLoggedIn, handleUserLogOut }) {
       </div>
       <div className="header-menu-right">
         <ul className="menu-links">
-          {isUserLoggedIn && (
-            <li>
-              <Link to="/edit-account">Edit Account</Link>
-            </li>
-          )}
           {/* The links below are for development rn and should be removed once proper
                         routing is in place. */}
           {/* DEBUG: left links here for easy debug later if needed
@@ -37,10 +34,10 @@ function HeaderMenu({ isUserLoggedIn, handleUserLogOut }) {
                     </li>
                     */}
 
-          {isUserLoggedIn ? (
+          {loginState === "true" ? (
             <div className="account-control-link">
               <li>
-                <Link to="/home" onClick={handleUserLogOut}>
+                <Link to="/login" onClick={handleUserLogOut}>
                   Logout
                 </Link>
               </li>

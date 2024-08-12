@@ -33,9 +33,7 @@ function ManageTrails({}) {
   const fields = ["name", "address"];
 
   return (
-    <div>
-      <PageHeader text={"Manage Trails"} />
-      <DashboardButtons />
+    <>
       {formOpen.add && (
         <AddForm
           fields={fields}
@@ -61,20 +59,31 @@ function ManageTrails({}) {
             : "manage-checkpoints"
         }
       >
-        <TableButtons
-          selectedItem={selectedRow}
-          setFormOpen={setFormOpen}
-          item={"trail"}
-        />
-        <Table
-          fields={fields}
-          initItems={data.trails}
-          setSelectedRow={setSelectedRow}
-          selectedRow={selectedRow}
-          itemType={"Trail"}
-        />
+        <PageHeader text={"Manage Trails"} />
+        <DashboardButtons />
+
+        <div
+          className={
+            formOpen.add || formOpen.edit
+              ? "manage-checkpoints"
+              : "manage-checkpoints"
+          }
+        >
+          <TableButtons
+            selectedItem={selectedRow}
+            setFormOpen={setFormOpen}
+            item={"trail"}
+          />
+          <Table
+            fields={fields}
+            initItems={data.trails}
+            setSelectedRow={setSelectedRow}
+            selectedRow={selectedRow}
+            itemType={"Trail"}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

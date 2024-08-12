@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-const Dropdown = ({ options, onSelect, placeholder }) => {
+const Dropdown = ({ options, selectFilter, placeholder }) => {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-    onSelect(event.target.value);
+    const newValue = event.target.value;
+    setSelectedOption(newValue);
+    selectFilter(newValue);
   };
 
   return (

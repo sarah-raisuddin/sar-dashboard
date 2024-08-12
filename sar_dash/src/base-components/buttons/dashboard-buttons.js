@@ -1,5 +1,3 @@
-// src/InputComponent.js
-
 function DashboardButton({ label, link, icon }) {
   return (
     <div className="button-container">

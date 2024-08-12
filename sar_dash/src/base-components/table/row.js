@@ -3,9 +3,6 @@ import React, { useState, useEffect } from "react";
 function Row({ item, fields, setSelectedRow, selectedRow }) {
   const [highlighted, setHighlighted] = useState(false);
 
-  console.log(item);
-  console.log(fields);
-
   useEffect(() => {
     if (JSON.stringify(item) !== JSON.stringify(selectedRow)) {
       setHighlighted(false);
@@ -13,13 +10,33 @@ function Row({ item, fields, setSelectedRow, selectedRow }) {
   }, [selectedRow, item]);
 
   const handleClick = () => {
-    if (!highlighted) {
-      setSelectedRow(item);
-      setHighlighted(true);
-    } else {
-      setSelectedRow(null);
-      setHighlighted(false);
+    if (setSelectedRow) {
+      if (!highlighted) {
+        setSelectedRow(item);
+        setHighlighted(true);
+      } else {
+        setSelectedRow(null);
+        setHighlighted(false);
+      }
     }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+    const timeOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+
+    const formattedDate = date.toLocaleDateString("en-US", dateOptions);
+    const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
+    const formattedTimeStamp = `${formattedDate}, ${formattedTime}`;
+    return {
+      formattedTimeStamp,
+    };
   };
 
   return (
@@ -31,7 +48,9 @@ function Row({ item, fields, setSelectedRow, selectedRow }) {
     >
       {fields.map((field, index) => (
         <td onClick={handleClick} key={index}>
-          {item[field]}
+          {field === "time"
+            ? formatDate(item[field]).formattedTimeStamp
+            : item[field]}
         </td>
       ))}
     </tr>

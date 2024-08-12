@@ -8,13 +8,15 @@ function TableButtons({ selectedItem, setFormOpen, item }) {
 
   const handleButtonClick = () => {
     navigate("/manage-checkpoints", {
-      state: { trailId: selectedItem.id, trailName: "juan" },
+      state: { trailId: selectedItem.id, trailName: selectedItem.name },
     });
   };
 
+  console.log(selectedItem);
+
   // different button types :3
   const ViewCheckpointsButton = (
-    <button className={`button`} onClick={() => handleButtonClick()}>
+    <button className={`button ${active}`} onClick={() => handleButtonClick()}>
       View Checkpoints
     </button>
   );

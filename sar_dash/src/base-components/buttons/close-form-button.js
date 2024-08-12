@@ -1,4 +1,3 @@
-// src/InputComponent.js
 import React, { useState } from "react";
 import xIcon from "../../images/x-icon.png";
 

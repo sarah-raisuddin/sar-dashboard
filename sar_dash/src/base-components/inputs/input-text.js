@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function InputText({ label, placeholder, value, onChange }) {
+function InputText({ label, placeholder, value, onChange, password }) {
   const handleInputChange = (event) => {
     onChange(event.target.value);
   };
@@ -9,7 +9,7 @@ function InputText({ label, placeholder, value, onChange }) {
     <div className="input-box">
       <label>{label}</label>
       <input
-        type="text"
+        type={password ? "password" : "text"}
         value={value}
         placeholder={placeholder}
         onChange={handleInputChange}
